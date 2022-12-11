@@ -1,3 +1,5 @@
+import { PrismaClientExceptionFilter } from 'src/filters/prisma-client-exception.filter';
+
 import {
   Body,
   Controller,
@@ -7,6 +9,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseFilters,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
@@ -17,6 +20,7 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 @ApiTags('users')
+@UseFilters(PrismaClientExceptionFilter)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
