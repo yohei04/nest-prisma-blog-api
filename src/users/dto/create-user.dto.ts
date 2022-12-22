@@ -6,11 +6,11 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @ApiProperty({ example: '名前' })
+  @ApiProperty({ example: '名前', minLength: 5 })
   name: string;
 
   @IsEmail()
   @IsNotEmpty()
-  @ApiProperty({ example: 'example@example.com' })
+  @ApiProperty({ example: 'example@example.com', uniqueItems: true })
   email: string;
 }
