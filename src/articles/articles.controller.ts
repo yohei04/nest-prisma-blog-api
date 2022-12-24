@@ -20,33 +20,40 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { ArticleEntity } from './entities/article.entity';
 
-@Controller('articles')
+@Controller()
 @ApiTags('articles')
 export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
-  @Post()
+  @Post('articles')
   @ApiOperation({ summary: '記事作成' })
   @ApiCreatedResponse({ type: ArticleEntity })
   create(@Body() createArticleDto: CreateArticleDto) {
     return this.articlesService.create(createArticleDto);
   }
 
-  @Get()
+  @Get('articles')
   @ApiOperation({ summary: '記事一覧取得' })
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
   findAll() {
     return this.articlesService.findAll();
   }
 
-  @Get(':id')
+  @Get('user/:userId/articles')
+  @ApiOperation({ summary: '特定のユーザーの記事一覧取得' })
+  @ApiOkResponse({ type: ArticleEntity, isArray: true })
+  findAllByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.articlesService.findAllByUserId(userId);
+  }
+
+  @Get('articles/:id')
   @ApiOperation({ summary: '記事詳細取得' })
   @ApiOkResponse({ type: ArticleEntity })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.articlesService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('articles/:id')
   @ApiOperation({ summary: '記事編集' })
   @ApiOkResponse({ type: ArticleEntity })
   update(
@@ -56,7 +63,7 @@ export class ArticlesController {
     return this.articlesService.update(id, updateArticleDto);
   }
 
-  @Delete(':id')
+  @Delete('articles/:id')
   @ApiOperation({ summary: '記事削除' })
   @ApiOkResponse({ type: ArticleEntity })
   remove(@Param('id', ParseIntPipe) id: number) {

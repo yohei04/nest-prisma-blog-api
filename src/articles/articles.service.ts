@@ -22,6 +22,14 @@ export class ArticlesService {
     return this.prisma.article.findMany();
   }
 
+  findAllByUserId(userId: number) {
+    return this.prisma.article.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
   findOne(id: number) {
     return this.prisma.article.findUnique({ where: { id } });
   }
