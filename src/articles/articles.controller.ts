@@ -4,19 +4,23 @@ import {
   Delete,
   Get,
   Param,
+  ParseBoolPipe,
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { IsPublishedDto } from './dto/is-published.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { ArticleEntity } from './entities/article.entity';
 
@@ -42,8 +46,12 @@ export class ArticlesController {
   @Get('user/:userId/articles')
   @ApiOperation({ summary: '特定のユーザーの記事一覧取得' })
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
-  findAllByUserId(@Param('userId', ParseIntPipe) userId: number) {
-    return this.articlesService.findAllByUserId(userId);
+  @ApiQuery({ name: 'published', required: false, type: Boolean })
+  findAllByUserId(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Query() { published }: IsPublishedDto,
+  ) {
+    return this.articlesService.findAllByUserId({ userId, published });
   }
 
   @Get('articles/:id')

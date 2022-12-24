@@ -22,10 +22,17 @@ export class ArticlesService {
     return this.prisma.article.findMany();
   }
 
-  findAllByUserId(userId: number) {
+  findAllByUserId({
+    userId,
+    published,
+  }: {
+    userId: number;
+    published?: boolean;
+  }) {
     return this.prisma.article.findMany({
       where: {
         userId,
+        published,
       },
     });
   }
