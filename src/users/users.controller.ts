@@ -40,19 +40,22 @@ export class UsersController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'ユーザー一覧取得' })
   @ApiOkResponse({ type: UserEntity, isArray: true })
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  @ApiCreatedResponse({ type: UserEntity })
+  @ApiOperation({ summary: 'ユーザー詳細取得' })
+  @ApiOkResponse({ type: UserEntity })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
   @Patch(':id')
-  @ApiCreatedResponse({ type: UserEntity })
+  @ApiOperation({ summary: 'ユーザー編集' })
+  @ApiOkResponse({ type: UserEntity })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
@@ -61,7 +64,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @ApiCreatedResponse({ type: UserEntity })
+  @ApiOperation({ summary: 'ユーザー削除' })
+  @ApiOkResponse({ type: UserEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);
   }
