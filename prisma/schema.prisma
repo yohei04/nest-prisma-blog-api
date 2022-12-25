@@ -18,6 +18,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   articles Article[]
+  comments  Comment[]
 }
 
 model Article {
@@ -29,6 +30,19 @@ model Article {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  userId  Int
+  user    User      @relation(fields: [userId], references: [id])
+  comments  Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   userId Int
   user   User @relation(fields: [userId], references: [id])
+  articleId Int
+  article   Article @relation(fields: [articleId], references: [id])
 }
