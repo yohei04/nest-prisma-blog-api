@@ -1,6 +1,6 @@
 # NestJS - Prisma Blog API
 NestJSとPrismaで作成したブログ用のAPIです。  
-API作成の勉強のために作りました。  
+APIの勉強のために作成しました。  
 デプロイにはrenderを使用しているので読み込みに30秒ほど時間がかかります。  
 また画面はなくAPIのみなのでSwaggerUIのみになります。  
 
